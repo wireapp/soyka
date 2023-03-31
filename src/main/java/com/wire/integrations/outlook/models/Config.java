@@ -5,16 +5,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.db.DataSourceFactory;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 
 import javax.validation.Valid;
 import java.util.UUID;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Config extends Configuration {
+    public JerseyClientConfiguration jersey;
 
     @Valid
     @JsonProperty
-    public JerseyClientConfiguration jersey;
+    public SwaggerBundleConfiguration swagger;
 
     @Valid
     @JsonProperty
@@ -34,4 +36,5 @@ public class Config extends Configuration {
 
     @JsonProperty
     public String domain;
+
 }

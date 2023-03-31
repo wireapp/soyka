@@ -11,6 +11,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+    <repositories>
+        <!-- to fetch specific version of dropwizard-swagger dependency -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>io.dropwizard</groupId>
@@ -36,6 +43,11 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
             <version>6.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.smoketurner</groupId>
+            <artifactId>dropwizard-swagger</artifactId>
+            <version>72e8441e4a</version>
         </dependency>
     </dependencies>
     <build>

@@ -13,6 +13,8 @@ import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.federecio.dropwizard.swagger.SwaggerBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.flywaydb.core.Flyway;
 import org.jdbi.v3.core.Jdbi;
@@ -37,6 +39,11 @@ public class App extends Application<Config> {
                         new EnvironmentVariableSubstitutor(false)
                 )
         );
+        bootstrap.addBundle(new SwaggerBundle<Config>() {
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(Config configuration) {
+                return configuration.swagger;
+            }
+        });
     }
 
     public void run(Config configuration, Environment environment) {
@@ -46,7 +53,7 @@ public class App extends Application<Config> {
         final FilterRegistration.Dynamic cors = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
 
         // Configure CORS parameters
-        cors.setInitParameter("allowedOrigins", String.format("%s,%s", config.domain, config.wireWeb));
+        cors.setInitParameter("allowedOrigins", String.format("%s,%s,localhost", config.domain, config.wireWeb));
         cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
         cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
 

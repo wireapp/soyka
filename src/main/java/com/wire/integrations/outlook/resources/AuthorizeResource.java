@@ -3,6 +3,7 @@ package com.wire.integrations.outlook.resources;
 import com.wire.integrations.outlook.App;
 import com.wire.integrations.outlook.Helpers;
 import com.wire.integrations.outlook.dao.SessionsDAO;
+import io.swagger.annotations.Api;
 import org.apache.http.client.utils.URIBuilder;
 import org.jdbi.v3.core.Jdbi;
 
@@ -14,6 +15,7 @@ import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 
 @Path("/authorize")
+@Api
 public class AuthorizeResource {
     private final SessionsDAO sessionsDAO;
 

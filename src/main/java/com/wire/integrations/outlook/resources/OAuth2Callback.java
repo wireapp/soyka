@@ -3,6 +3,7 @@ package com.wire.integrations.outlook.resources;
 import com.wire.integrations.outlook.*;
 import com.wire.integrations.outlook.dao.SessionsDAO;
 import com.wire.integrations.outlook.models.Token;
+import io.swagger.annotations.Api;
 import org.jdbi.v3.core.Jdbi;
 
 import javax.ws.rs.GET;
@@ -16,6 +17,7 @@ import java.io.InputStream;
 import static com.wire.integrations.outlook.Helpers.ZCALENDAR_SID;
 
 @Path("/oauth2callback")
+@Api
 public class OAuth2Callback {
 
     private final SessionsDAO sessionsDAO;

@@ -6,6 +6,7 @@ import com.wire.integrations.outlook.*;
 import com.wire.integrations.outlook.dao.SessionsDAO;
 import com.wire.integrations.outlook.models.Session;
 import com.wire.integrations.outlook.models.Token;
+import io.swagger.annotations.Api;
 import org.jdbi.v3.core.Jdbi;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ import static com.wire.integrations.outlook.Helpers.ZCALENDAR_SID;
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/event")
 @Consumes(MediaType.APPLICATION_JSON)
+@Api
 public class EventResource {
     private final SessionsDAO sessionsDAO;
     private final Client client;
