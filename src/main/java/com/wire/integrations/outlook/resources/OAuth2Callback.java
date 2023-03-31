@@ -1,6 +1,7 @@
 package com.wire.integrations.outlook.resources;
 
 import com.wire.integrations.outlook.*;
+import com.wire.integrations.outlook.dao.SessionsDAO;
 import com.wire.integrations.outlook.models.Token;
 import org.jdbi.v3.core.Jdbi;
 

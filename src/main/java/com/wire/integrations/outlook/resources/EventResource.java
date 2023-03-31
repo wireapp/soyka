@@ -3,6 +3,7 @@ package com.wire.integrations.outlook.resources;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wire.integrations.outlook.*;
+import com.wire.integrations.outlook.dao.SessionsDAO;
 import com.wire.integrations.outlook.models.Session;
 import com.wire.integrations.outlook.models.Token;
 import org.jdbi.v3.core.Jdbi;

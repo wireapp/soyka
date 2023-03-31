@@ -7,11 +7,11 @@ server:
     - type: http
       port: 8081
 
-clientId: 91ab148a-4b6c-4eac-aab6-60f316912f4d
-wireServer: https://staging-nginz-https.zinfra.io
-wireWeb: wire-webapp-edge.zinfra.io
-callback: https://outlook.integrations.zinfra.io/oauth2callback
-domain: outlook.integrations.zinfra.io
+clientId: ${CLIENT_ID:-91ab148a-4b6c-4eac-aab6-60f316912f4d}
+wireServer: ${WIRE_SERVER:-https://staging-nginz-https.zinfra.io}
+wireWeb: ${WIRE_WEB:-wire-webapp-edge.zinfra.io}
+callback: ${CALLBACK:-https://outlook.integrations.zinfra.io/oauth2callback}
+domain: ${DOMAIN:-outlook.integrations.zinfra.io}
 
 database:
   driverClass: org.postgresql.Driver

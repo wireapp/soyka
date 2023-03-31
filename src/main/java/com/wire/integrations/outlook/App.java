@@ -39,7 +39,7 @@ public class App extends Application<Config> {
         );
     }
 
-    public void run(Config configuration, Environment environment) throws Exception {
+    public void run(Config configuration, Environment environment) {
         App.config = configuration;
         App.metrics = environment.metrics();
 

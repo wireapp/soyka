@@ -1,4 +1,4 @@
-package com.wire.integrations.outlook;
+package com.wire.integrations.outlook.dao;
 
 import com.wire.integrations.outlook.models.Session;
 import org.jdbi.v3.core.mapper.RowMapper;

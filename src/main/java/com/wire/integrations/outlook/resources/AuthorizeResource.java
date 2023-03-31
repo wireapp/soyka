@@ -2,7 +2,7 @@ package com.wire.integrations.outlook.resources;
 
 import com.wire.integrations.outlook.App;
 import com.wire.integrations.outlook.Helpers;
-import com.wire.integrations.outlook.SessionsDAO;
+import com.wire.integrations.outlook.dao.SessionsDAO;
 import org.apache.http.client.utils.URIBuilder;
 import org.jdbi.v3.core.Jdbi;
 

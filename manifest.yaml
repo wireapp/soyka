@@ -30,6 +30,21 @@ spec:
             - name: DB_URL
               value: jdbc:postgresql://10.64.33.3:5432/soyka
 
+            - name: CLIENT_ID
+              value: 91ab148a-4b6c-4eac-aab6-60f316912f4d
+
+            - name: WIRE_SERVER
+              value: https://staging-nginz-https.zinfra.io
+
+            - name: WIRE_WEB
+              value: wire-webapp-edge.zinfra.io
+
+            - name: CALLBACK
+              value: https://outlook.integrations.zinfra.io/oauth2callback
+
+            - name: DOMAIN
+              value: outlook.integrations.zinfra.io
+
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
