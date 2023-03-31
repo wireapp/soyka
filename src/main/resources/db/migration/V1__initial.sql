@@ -1,0 +1,10 @@
+CREATE TABLE SESSIONS (
+	session_id VARCHAR PRIMARY KEY,
+	access_token VARCHAR NOT NULL,
+    refresh_token VARCHAR NOT NULL
+);
+
+CREATE TABLE STATE (
+	state_id VARCHAR PRIMARY KEY,
+	verifier VARCHAR NOT NULL
+);

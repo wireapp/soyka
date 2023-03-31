@@ -1,0 +1,38 @@
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
+
+  adminConnectors:
+    - type: http
+      port: 8081
+
+clientId: 91ab148a-4b6c-4eac-aab6-60f316912f4d
+wireServer: https://staging-nginz-https.zinfra.io
+wireWeb: wire-webapp-edge.zinfra.io
+callback: https://outlook.integrations.zinfra.io/oauth2callback
+domain: outlook.integrations.zinfra.io
+
+database:
+  driverClass: org.postgresql.Driver
+  url: ${DB_URL:-jdbc:postgresql://localhost/soyka}
+  user: ${DB_USER:-}
+  password: ${DB_PASSWORD:-}
+
+jersey:
+  timeout: 40s
+  connectionTimeout: 40s
+  connectionRequestTimeout: 40s
+  keepAlive: 0ms
+  retries: 3
+  userAgent: soyka
+  gzipEnabled: false
+  gzipEnabledForRequests: false
+  maxConnections: 10
+
+  tls:
+    protocol: TLSv1.2
+    provider: SunJSSE
+    supportedProtocols:
+      - TLSv1.1
+      - TLSv1.2
