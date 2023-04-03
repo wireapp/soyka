@@ -3,11 +3,8 @@ package com.wire.integrations.outlook.resources;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wire.integrations.outlook.*;
-import com.wire.integrations.outlook.dao.SessionsDAO;
-import com.wire.integrations.outlook.models.Session;
 import com.wire.integrations.outlook.models.Token;
 import io.swagger.annotations.Api;
-import org.jdbi.v3.core.Jdbi;
 
 import javax.validation.Valid;
 import javax.ws.rs.*;
@@ -18,26 +15,27 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
 
-import static com.wire.integrations.outlook.Helpers.ZCALENDAR_SID;
+import static com.wire.integrations.outlook.Helpers.*;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/event")
 @Consumes(MediaType.APPLICATION_JSON)
 @Api
 public class EventResource {
-    private final SessionsDAO sessionsDAO;
     private final Client client;
 
-    public EventResource(Jdbi jdbi, Client client) {
-        sessionsDAO = jdbi.onDemand(SessionsDAO.class);
+    public EventResource(Client client) {
         this.client = client;
     }
 
     @POST
-    public Response newEvent(@CookieParam(ZCALENDAR_SID) String sessionId, @Valid _Payload payload) {
+    public Response newEvent(@CookieParam(ZCALENDAR_TOKEN) String accessToken,
+                             @CookieParam(ZCALENDAR_REFRESH) String refreshToken,
+                             @Valid _Payload payload) {
         try {
-            Session session = sessionsDAO.get(sessionId);
-            if (session == null) {
+            Token token = null;
+
+            if (accessToken == null) {
                 return Response
                         .status(401)
                         .build();
@@ -46,34 +44,32 @@ public class EventResource {
             Response response = client.target(App.config.wireServer)
                     .path("v2/self")
                     .request(MediaType.APPLICATION_JSON)
-                    .header("Authorization", "Bearer " + session.token)
+                    .header("Authorization", "Bearer " + accessToken)
                     .get();
 
             if (response.getStatus() == 401) {
                 Form form = new Form();
                 form.param("client_id", App.config.clientId.toString());
                 form.param("grant_type", "refresh_token");
-                form.param("refresh_token", session.refresh);
+                form.param("refresh_token", refreshToken);
 
-                Response refresh = client.target(App.config.wireServer)
+                response = client.target(App.config.wireServer)
                         .path("oauth/token")
                         .request(MediaType.APPLICATION_JSON)
                         .post(Entity.form(form));
 
-                if (refresh.getStatus() >= 400) {
-                    sessionsDAO.deleteSession(session.id);
-
-                    return error(refresh, "Refresh");
+                if (response.getStatus() >= 400) {
+                    return error(response, "Refresh");
                 }
 
-                Token token = refresh.readEntity(Token.class);
-                sessionsDAO.upsert(sessionId, token.token, token.refresh);
-                session = sessionsDAO.get(sessionId);
+                token = response.readEntity(Token.class);
+
+                accessToken = token.token;
 
                 response = client.target(App.config.wireServer)
                         .path("v2/self")
                         .request(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + session.token)
+                        .header("Authorization", "Bearer " + accessToken)
                         .get();
             }
 
@@ -90,7 +86,7 @@ public class EventResource {
             response = client.target(App.config.wireServer)
                     .path("v2/conversations")
                     .request(MediaType.APPLICATION_JSON)
-                    .header("Authorization", "Bearer " + session.token)
+                    .header("Authorization", "Bearer " + accessToken)
                     .post(Entity.entity(newConversation, MediaType.APPLICATION_JSON));
 
             if (response.getStatus() >= 400) {
@@ -105,7 +101,7 @@ public class EventResource {
                     .path(conv.id.toString())
                     .path("code")
                     .request(MediaType.APPLICATION_JSON)
-                    .header("Authorization", "Bearer " + session.token)
+                    .header("Authorization", "Bearer " + accessToken)
                     .post(Entity.json(""));
 
             if (response.getStatus() >= 400) {
@@ -116,6 +112,22 @@ public class EventResource {
 
             conv.link = link.data.uri;
 
+            if (token != null) {
+                String accessCookie = String.format("%s=%s;Version=1;Domain=%s;Secure;HttpOnly;SameSite=None",
+                        ZCALENDAR_TOKEN,
+                        token.token,
+                        App.config.domain);
+                String refreshCookie = String.format("%s=%s;Version=1;Domain=%s;Secure;HttpOnly;SameSite=None",
+                        ZCALENDAR_REFRESH,
+                        token.refresh,
+                        App.config.domain);
+                return Response
+                        .ok(conv)
+                        .header("Set-Cookie", accessCookie)
+                        .header("Set-Cookie", refreshCookie)
+                        .build();
+
+            }
             return Response
                     .ok(conv)
                     .build();

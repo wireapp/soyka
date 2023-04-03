@@ -2,10 +2,8 @@ package com.wire.integrations.outlook.resources;
 
 import com.wire.integrations.outlook.App;
 import com.wire.integrations.outlook.Helpers;
-import com.wire.integrations.outlook.dao.SessionsDAO;
 import io.swagger.annotations.Api;
 import org.apache.http.client.utils.URIBuilder;
-import org.jdbi.v3.core.Jdbi;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -17,19 +15,13 @@ import java.security.NoSuchAlgorithmException;
 @Path("/authorize")
 @Api
 public class AuthorizeResource {
-    private final SessionsDAO sessionsDAO;
-
-    public AuthorizeResource(Jdbi jdbi) {
-        sessionsDAO = jdbi.onDemand(SessionsDAO.class);
-    }
-
     @GET
     public Response authorize() throws URISyntaxException, NoSuchAlgorithmException {
         final String state = Helpers.randomName(16);
         final String verifier = Helpers.randomName(64);
         final String challenge = Helpers.sha256(verifier.getBytes());
 
-        sessionsDAO.insertState(state, verifier);
+        OAuth2Callback.challengeMap.put(state, verifier);
 
         URI uri = new URIBuilder()
                 .setScheme("https")

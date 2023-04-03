@@ -10,14 +10,11 @@ import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
-import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
-import org.flywaydb.core.Flyway;
-import org.jdbi.v3.core.Jdbi;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -39,7 +36,7 @@ public class App extends Application<Config> {
                         new EnvironmentVariableSubstitutor(false)
                 )
         );
-        bootstrap.addBundle(new SwaggerBundle<Config>() {
+        bootstrap.addBundle(new SwaggerBundle<>() {
             protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(Config configuration) {
                 return configuration.swagger;
             }
@@ -65,16 +62,8 @@ public class App extends Application<Config> {
                 .withProvider(JacksonJsonProvider.class)
                 .build(getName());
 
-        Jdbi jdbi = new JdbiFactory().build(environment, config.database, "soyka");
-
-        Flyway flyway = Flyway
-                .configure()
-                .dataSource(config.database.build(metrics, "soyka"))
-                .load();
-        flyway.migrate();
-
-        environment.jersey().register(new AuthorizeResource(jdbi));
-        environment.jersey().register(new OAuth2Callback(jdbi, client));
-        environment.jersey().register(new EventResource(jdbi, client));
+        environment.jersey().register(new AuthorizeResource());
+        environment.jersey().register(new OAuth2Callback(client));
+        environment.jersey().register(new EventResource(client));
     }
 }

@@ -7,7 +7,8 @@ import java.util.Base64;
 
 public class Helpers {
     private static final SecureRandom random = new SecureRandom();
-    public static final String ZCALENDAR_SID = "zcalendar_SID";
+    public static final String ZCALENDAR_TOKEN = "token";
+    public static final String ZCALENDAR_REFRESH = "refresh";
 
     public static String randomName(int len) {
         final String AB = "0123456789abcdefghijklmnopqrstuvwxyz";

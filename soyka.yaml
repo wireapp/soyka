@@ -13,12 +13,6 @@ wireWeb: ${WIRE_WEB:-wire-webapp-edge.zinfra.io}
 callback: ${CALLBACK:-https://outlook.integrations.zinfra.io/oauth2callback}
 domain: ${DOMAIN:-outlook.integrations.zinfra.io}
 
-database:
-  driverClass: org.postgresql.Driver
-  url: ${DB_URL:-jdbc:postgresql://localhost/soyka}
-  user: ${DB_USER:-}
-  password: ${DB_PASSWORD:-}
-
 jersey:
   timeout: 40s
   connectionTimeout: 40s
@@ -41,7 +35,7 @@ swagger:
   description: Soyka - OAuth Client for Wire Authorization Server
   contactEmail: dejan@wire.com
   license: GPLv3
-  version: 1.17.0
+  version: 0.1.0
   resourcePackage: com.wire.integrations.outlook.resources
   schemes:
     - https
