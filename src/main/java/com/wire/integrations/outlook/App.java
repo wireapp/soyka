@@ -1,24 +1,22 @@
 package com.wire.integrations.outlook;
 
 import com.codahale.metrics.MetricRegistry;
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 import com.wire.integrations.outlook.models.Config;
 import com.wire.integrations.outlook.resources.AuthorizeResource;
 import com.wire.integrations.outlook.resources.EventResource;
 import com.wire.integrations.outlook.resources.OAuth2Callback;
-import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
-import io.dropwizard.setup.Bootstrap;
-import io.dropwizard.setup.Environment;
-import io.federecio.dropwizard.swagger.SwaggerBundle;
-import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
+import io.dropwizard.core.Application;
+import io.dropwizard.core.setup.Bootstrap;
+import io.dropwizard.core.setup.Environment;
+import jakarta.servlet.DispatcherType;
+import jakarta.servlet.FilterRegistration;
+import jakarta.ws.rs.client.Client;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
-import javax.ws.rs.client.Client;
 import java.util.EnumSet;
 
 public class App extends Application<Config> {
@@ -36,11 +34,6 @@ public class App extends Application<Config> {
                         new EnvironmentVariableSubstitutor(false)
                 )
         );
-        bootstrap.addBundle(new SwaggerBundle<>() {
-            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(Config configuration) {
-                return configuration.swagger;
-            }
-        });
     }
 
     public void run(Config configuration, Environment environment) {

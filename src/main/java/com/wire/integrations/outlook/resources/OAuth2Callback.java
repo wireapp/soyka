@@ -3,13 +3,14 @@ package com.wire.integrations.outlook.resources;
 import com.wire.integrations.outlook.*;
 import com.wire.integrations.outlook.models.Token;
 import io.swagger.annotations.Api;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.*;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.Form;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import java.io.InputStream;
 import java.util.concurrent.ConcurrentHashMap;
 

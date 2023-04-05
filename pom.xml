@@ -7,7 +7,7 @@
     <name>soyka</name>
     <url>http://maven.apache.org</url>
     <properties>
-        <dropwizard.version>2.1.5</dropwizard.version>
+        <dropwizard.version>4.0.0</dropwizard.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>com.github.smoketurner</groupId>
             <artifactId>dropwizard-swagger</artifactId>
-            <version>72e8441e4a</version>
+            <version>2.0.0-1</version>
         </dependency>
     </dependencies>
     <build>

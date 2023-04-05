@@ -6,13 +6,13 @@ import com.wire.integrations.outlook.*;
 import com.wire.integrations.outlook.models.Token;
 import io.swagger.annotations.Api;
 
-import javax.validation.Valid;
-import javax.ws.rs.*;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Form;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.validation.Valid;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.Form;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import java.util.UUID;
 
 import static com.wire.integrations.outlook.Helpers.*;
@@ -126,8 +126,8 @@ public class EventResource {
                         .header("Set-Cookie", accessCookie)
                         .header("Set-Cookie", refreshCookie)
                         .build();
-
             }
+
             return Response
                     .ok(conv)
                     .build();
