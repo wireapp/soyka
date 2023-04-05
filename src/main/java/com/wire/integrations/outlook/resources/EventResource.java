@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wire.integrations.outlook.*;
 import com.wire.integrations.outlook.models.Token;
-import io.swagger.annotations.Api;
 
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -20,7 +19,6 @@ import static com.wire.integrations.outlook.Helpers.*;
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/event")
 @Consumes(MediaType.APPLICATION_JSON)
-@Api
 public class EventResource {
     private final Client client;
 

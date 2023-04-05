@@ -28,15 +28,3 @@ jersey:
     supportedProtocols:
       - TLSv1.1
       - TLSv1.2
-
-swagger:
-  uriPrefix: /
-  title: Soyka Swagger
-  description: Soyka - OAuth Client for Wire Authorization Server
-  contactEmail: dejan@wire.com
-  license: GPLv3
-  version: 0.1.0
-  resourcePackage: com.wire.integrations.outlook.resources
-  schemes:
-    - https
-    - http

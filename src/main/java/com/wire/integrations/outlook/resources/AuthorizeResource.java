@@ -2,7 +2,6 @@ package com.wire.integrations.outlook.resources;
 
 import com.wire.integrations.outlook.App;
 import com.wire.integrations.outlook.Helpers;
-import io.swagger.annotations.Api;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
@@ -13,7 +12,6 @@ import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 
 @Path("/authorize")
-@Api
 public class AuthorizeResource {
     @GET
     public Response authorize() throws URISyntaxException, NoSuchAlgorithmException {

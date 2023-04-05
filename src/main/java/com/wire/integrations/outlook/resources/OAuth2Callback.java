@@ -2,7 +2,6 @@ package com.wire.integrations.outlook.resources;
 
 import com.wire.integrations.outlook.*;
 import com.wire.integrations.outlook.models.Token;
-import io.swagger.annotations.Api;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
@@ -17,7 +16,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import static com.wire.integrations.outlook.Helpers.*;
 
 @Path("/oauth2callback")
-@Api
 public class OAuth2Callback {
     private final Client client;
 
